@@ -1,0 +1,13 @@
+task default: :a
+
+task a: :b do
+  puts 'a'
+end
+
+task :b do
+  puts 'b'
+end
+
+task :c do
+  puts "ENV['C'] = #{ENV['C'].inspect}"
+end
