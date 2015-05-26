@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
+require 'minirake'
+
+filename = 'Minirakefile'
+minirake = Minirake.new env: ENV
+
+if File.exist? filename
+  minirake.instance_eval do
+    binding.eval File.read(filename), filename
+  end
+end
+
+minirake.call ARGV
