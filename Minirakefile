@@ -3,25 +3,42 @@ task default: :a
 
 # will invoke b first
 task a: :b do
-  puts 'a'
+  puts 'task a'
 end
+
+# will invoke b and b2 first
+task c: [:b, :b2] do
+  puts 'task c'
+end
+
+# can build up deps, and use string or symbolic names
+task(d: :b) { puts 'task d' }
+task d: 'b2'
+
+# has multiple bodies
+task(:e) { puts 'body1' }
+task(:e) { puts 'body2' }
 
 # has no deps
 task :b do
-  puts 'b'
+  puts 'task b'
 end
 
-# try: bin/minirake c
-# try: bin/minirake c C=X
-# try: bin/minirake C=X c
-task :c do
+task :b2 do
+  puts 'task b2'
+end
+
+# try: bin/minirake envvar
+# try: bin/minirake envvar C=X
+# try: bin/minirake C=X envvar
+task :envvar do
   puts "ENV['C'] = #{ENV['C'].inspect}"
 end
 
-def zomg
-  puts "I AM: #{inspect}"
+def some_method
+  "content from a method"
 end
-task :showself do
-  puts "I AM: #{inspect}"
-  zomg
+task :show_context do
+  puts "I'm an instance of #{self.class}"
+  puts "I can call methods: #{some_method}"
 end
