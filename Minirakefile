@@ -1,13 +1,27 @@
+# invoke with no args to see this
 task default: :a
 
+# will invoke b first
 task a: :b do
   puts 'a'
 end
 
+# has no deps
 task :b do
   puts 'b'
 end
 
+# try: bin/minirake c
+# try: bin/minirake c C=X
+# try: bin/minirake C=X c
 task :c do
   puts "ENV['C'] = #{ENV['C'].inspect}"
+end
+
+def zomg
+  puts "I AM: #{inspect}"
+end
+task :showself do
+  puts "I AM: #{inspect}"
+  zomg
 end
